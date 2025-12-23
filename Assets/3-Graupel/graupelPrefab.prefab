@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1253624812421492061}
   - component: {fileID: 5372845685063753419}
   - component: {fileID: 2613615620257003807}
+  - component: {fileID: 6733954842440431888}
   m_Layer: 5
   m_Name: graupelPrefab
   m_TagString: Untagged
@@ -88,5 +89,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeedc79bb5ff59b4088639b491d1690d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 300
+  speed: 150
   canvas: {fileID: 0}
+--- !u!114 &6733954842440431888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5524955264512534646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bb2db0e1a11e10469518c2befab4104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -10,12 +10,20 @@ namespace Graupel
         public GameObject graupelPrefab;
         public Sprite[] graupelSprites;
 
-        public int spawnCount = 1;
+        public Color highlightColor = Color.yellow;
+        public Color glowColor = Color.yellow; 
+        public float glowDistance = 5f; 
+
+        public float difficulty = 0;
+        public int spawnCount = 5;
 
         private bool object1Spawned = false;
 
         void Start()
         {
+            difficulty = Managers.MinigamesManager.GetCurrentMinigameDifficulty() * 100f;
+            spawnCount += (int)(difficulty/10);
+            
             for (int i = 0; i < spawnCount; i++)
             {
                 SpawnGraupel();
@@ -29,14 +37,15 @@ namespace Graupel
             RectTransform rect = obj.GetComponent<RectTransform>();
             GraupelFall fall = obj.GetComponent<GraupelFall>();
 
-            // Assign canvas to movement script
-            fall.canvas = canvas;
+            // Movement bounds
+            fall.areaWidth = 400f;  
+            fall.areaHeight = 450f;
 
-            // Random starting position inside canvas
-            float canvasWidth = canvas.GetComponent<RectTransform>().rect.width;
-            float canvasHeight = canvas.GetComponent<RectTransform>().rect.height;
+            // Random starting position 
+            float halfWidth = fall.areaWidth / 2f;
+            float halfHeight = fall.areaHeight / 2f;
 
-            rect.anchoredPosition = new Vector2( Random.Range(-canvasWidth / 2f, canvasWidth / 2f), Random.Range(-canvasHeight / 2f, canvasHeight / 2f));
+            rect.anchoredPosition = new Vector2( Random.Range(-halfWidth / 2f, halfWidth / 2f), Random.Range(-halfHeight / 2f, halfHeight / 2f));
 
             // Assign a random sprite from the list
             Image img = obj.GetComponent<Image>();
@@ -49,6 +58,7 @@ namespace Graupel
             if (!object1Spawned)
             {
                 obj.tag = "Object 1";
+                HighlightObject(obj);
                 object1Spawned = true;
             }
             else
@@ -56,6 +66,19 @@ namespace Graupel
                 obj.tag = "Object 2";
             }
         }
-    }
 
+        void HighlightObject(GameObject obj1)
+        {
+            Image img = obj1.GetComponent<Image>();
+            img.color = highlightColor;
+
+        Outline outline = obj1.GetComponent<Outline>();
+        if (outline == null)
+        {
+            outline = obj1.AddComponent<Outline>();
+        }
+        outline.effectColor = glowColor;
+        outline.effectDistance = new Vector2(glowDistance, glowDistance);
+        }
+    }
 }

@@ -5,18 +5,15 @@ namespace Graupel
     public class GraupelFall : MonoBehaviour
     {
         public float speed = 300f;
-        public Canvas canvas;
+        public float areaWidth = 400f;
+        public float areaHeight = 450f;
 
         private RectTransform rectTransform;
-        private RectTransform canvasRect;
         private Vector2 direction;
 
         void Awake()
         {
-            canvas = GetComponentInParent<Canvas>();
             rectTransform = GetComponent<RectTransform>();
-            canvasRect = canvas.GetComponent<RectTransform>();
-
             direction = new Vector2(Random.value > 0.5f ? 1 : -1 , Random.value > 0.5f ? 1 : -1).normalized;
         }
 
@@ -34,20 +31,23 @@ namespace Graupel
             float halfWidth = size.x / 2f;
             float halfHeight = size.y / 2f;
 
-            float canvasWidth = canvasRect.rect.width;
-            float canvasHeight = canvasRect.rect.height;
+            // Defined BG Area
+            float areaWidth = 400f;
+            float areaHeight = 450f;
 
-            float minX = -canvasWidth / 2f + halfWidth;
-            float maxX = canvasWidth / 2f - halfWidth;
-            float minY = -canvasHeight / 2f + halfHeight;
-            float maxY = canvasHeight / 2f - halfHeight;
+            float minX = -areaWidth / 2f + halfWidth;
+            float maxX = areaWidth / 2f - halfWidth;
+            float minY = -areaHeight / 2f + halfHeight;
+            float maxY = areaHeight / 2f - halfHeight;
 
+            // Horizontal Bounce
             if (pos.x <= minX || pos.x >= maxX)
             {
                 direction.x *= -1;
                 pos.x = Mathf.Clamp(pos.x, minX, maxX);
             }
 
+            // Vertical Bounce
             if (pos.y <= minY || pos.y >= maxY)
             {
                 direction.y *= -1;
